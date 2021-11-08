@@ -1,0 +1,62 @@
+os: linux
+dist: focal
+
+addons:
+  apt:
+    packages: lcov
+    
+language: cpp
+
+before_install:
+- sudo apt-get update
+- sudo apt-get install cppcheck
+- sudo apt-get install --yes libgtest-dev
+- sudo apt-get install --yes gcovr
+- sudo apt-get install valgrind
+- sudo apt-get install python3-pip
+- sudo pip install numpy
+
+
+jobs:
+  include:
+  - stage: Testing
+    name: Cppcheck
+    script: cppcheck -j4 --inconclusive --error-exitcode=1 --language=c *.c *.h
+
+  - stage: TestCoverage
+    script:
+      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
+      - make -C build
+
+
+  - stage: Sanitaize
+    script:
+      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_SANITIZERS=1
+      - make -C build
+
+  - stage: Valgrind
+    script:
+      - python3 create_test_data.py
+      - cmake -B build
+      - make -C build
+      - cd build
+      - valgrind --leak-check=full -q ./hw2 <../test_data.txt
+
+  - stage: Gtest
+    script:
+     - cmake -B build 
+     - make -C build
+     - cd build
+     - ./test_input
+     - ./test_naive_transpose
+     - ./test_parallel_transpose
+
+
+
+after_success:
+# Create lcov report
+- lcov --capture --directory . --output-file coverage.info
+- lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
+- lcov --list coverage.info # debug info
+# Uploading report to CodeCov
+- bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
