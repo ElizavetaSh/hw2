@@ -24,16 +24,16 @@ jobs:
       - cmake -B build -DADDRESS_SANITIZER=1
       - make -C build
       - cd build
-      - ctest
+      - ctest --output-on-failure
       - cmake -DUNDEFINED_SANITIZER=1 ..
       - make 
-      - ctest
+      - ctest --output-on-failure
       - cmake -DTHREAD_SANITIZER=1 ..
       - make
-      - ctest
+      - ctest --output-on-failure
       - cmake -DLEAK_SANITIZER=1 ..
       - make
-      - ctest
+      - ctest --output-on-failure
   - stage: StressTest
     script:
       - python3 create_test_data.py
