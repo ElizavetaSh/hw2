@@ -7,6 +7,7 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
+set(GCC_COVERAGE_COMPILE_FLAGS "-pthread")
 
 add_compile_options(-Wall -Wextra -Wpedantic)
 
@@ -15,7 +16,10 @@ add_link_options(-pthread)
 
 
 option(WITH_COVERAGE "Add coverage estimation")
-option(WITH_SANITIZERS "Add address sanitizer")
+option(ADDRESS_SANITIZER "Add address sanitizer")
+option(UNDEFINED_SANITIZER "Add undefined sanitizer")
+option(THREAD_SANITIZER "Add thread sanitizer")
+option(LEAK_SANITIZER "Add leak sanitizer")
 option(paral "Parallel calculate")
 
 if(WITH_COVERAGE)
