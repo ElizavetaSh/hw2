@@ -40,7 +40,7 @@ char *charsequence_from_file(int size, const char filename[])
             fprintf(stderr, "error with file10\n");
             return NULL;
         }
-        char *buf = (char *)calloc(1000, sizeof(char));
+        char *buf = (char *)calloc(100, sizeof(char));
         if (buf == NULL) 
         {
             fclose(file_with_charsequence);
@@ -49,7 +49,7 @@ char *charsequence_from_file(int size, const char filename[])
             return NULL;
         }
         int i = 0;
-        while (fgets(buf, 1000, file_with_charsequence) != NULL) 
+        while (fgets(buf, 100, file_with_charsequence) != NULL) 
         {
             size_t j = 0;
             while (j < strlen(buf) && buf[j] != '\n') 
