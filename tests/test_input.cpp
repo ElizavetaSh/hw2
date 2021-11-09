@@ -9,13 +9,13 @@ TEST(INPUT_TEST, empty_file) {
     }
     
 TEST(INPUT_TEST, file_number_1) { 
-    EXPECT_EQ(defin_fsize("/home/travis/build/ElizavetaSh/hw2/tests/data_test/file_number_2.txt"),14); 
+    EXPECT_EQ(defin_fsize("file_number_2.txt"),14); 
     }
 
 TEST(INPUT_TEST, file_number_2) 
 {
     char arr[] = "aabbssddffjjss";
-    char *file_values = charsequence_from_file(10, "/home/travis/build/ElizavetaSh/hw2/tests/data_test/file_number_2.txt");
+    char *file_values = charsequence_from_file(10, "file_number_2.txt");
     for (size_t i = 0; i < 10; ++i) 
         {
         EXPECT_TRUE(file_values[i]==arr[i]);
@@ -32,7 +32,7 @@ TEST(INPUT_TEST, file_number_3) {
 TEST(INPUT_TEST, file_number_4) 
 {
     char arr_t2[] = "aaaaaaaaaaaaasssssssdd";
-    char *file_values_tr = charsequence_from_file(26, ""/home/travis/build/ElizavetaSh/hw2/tests/data_test/test_file.txt");
+    char *file_values_tr = charsequence_from_file(26, "test_file.txt");
     for (size_t i = 0; i < 16; ++i) 
         {
         EXPECT_TRUE(file_values_tr[i]== arr_t2[i]);
