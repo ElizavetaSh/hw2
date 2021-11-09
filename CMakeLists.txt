@@ -84,11 +84,11 @@ enable_testing()
 add_test(NAME test_input
         COMMAND test_input
         WORKING_DIRECTORY ../tests/data_test/)
-add_test(NAME (test_stat_seqn 
-         COMMAND (test_stat_seqn 
+add_test(NAME test_stat_seqn 
+         COMMAND test_stat_seqn 
          WORKING_DIRECTORY ../tests/data_test/)
-add_test(NAME (test_dim_seqn 
-         COMMAND (test_dim_seqn 
+add_test(NAME test_dim_seqn 
+         COMMAND test_dim_seqn 
          WORKING_DIRECTORY ../tests/data_test/)
 
 
