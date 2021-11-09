@@ -27,16 +27,16 @@ endif()
 if(ADDRESS_SANITIZER)
     add_compile_options(-fsanitize=address)
     add_link_options(-fsanitize=address)
-endif()
-if(UNDEFINED_SANITIZER)
+
+elseif(UNDEFINED_SANITIZER)
     add_compile_options(-fsanitize=undefined)
     add_link_options(-fsanitize=undefined)
-endif()
-if(THREAD_SANITIZER)
+
+elseif(THREAD_SANITIZER)
     add_compile_options(-fsanitize=thread)
     add_link_options(-fsanitize=thread)
-endif()
-if(LEAK_SANITIZER)
+
+elseif(LEAK_SANITIZER)
     add_compile_options(-fsanitize=leak)
     add_link_options(-fsanitize=leak)
 endif()
@@ -81,8 +81,14 @@ add_executable(test_dim_seqn tests/test_stat_dim_lib.cpp)
 target_link_libraries(test_dim_seqn input_lib paral_sequence_lib ${GTEST_LIBRARIES} pthread)
 
 enable_testing()
-add_test(test_input test_input)
-add_test(test_dim_seqn test_dim_seqn)
-add_test(test_stat_seqn test_stat_seqn)
+add_test(NAME test_input
+        COMMAND test_input
+        WORKING_DIRECTORY ../tests/data_test/)
+add_test(NAME (test_stat_seqn 
+         COMMAND (test_stat_seqn 
+         WORKING_DIRECTORY ../tests/data_test/)
+add_test(NAME (test_dim_seqn 
+         COMMAND (test_dim_seqn 
+         WORKING_DIRECTORY ../tests/data_test/)
 
 

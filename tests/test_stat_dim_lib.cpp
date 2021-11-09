@@ -18,8 +18,8 @@ TEST(LIB_TEST, empty_file)
 
 TEST(LIB_TEST, test_lib_1) 
 {
-    int len = defin_fsize("1.txt");
-    char *file_values = charsequence_from_file(len, "1.txt");
+    int len = defin_fsize("../tests/data_test/1.txt");
+    char *file_values = charsequence_from_file(len, "../tests/data_test/1.txt");
     char result = 0;
         EXPECT_EQ(find_repeat_in_sequence(file_values, len,result), 'f');
 
@@ -28,8 +28,8 @@ TEST(LIB_TEST, test_lib_1)
 
 TEST(LIB_TEST, test_lib_2) 
 {
-    int len = defin_fsize("test_file.txt");
-    char *file_values = charsequence_from_file(len, "test_file.txt");
+    int len = defin_fsize("../tests/data_test/test_file.txt");
+    char *file_values = charsequence_from_file(len, "../tests/data_test/test_file.txt");
     char result = 0;
         EXPECT_EQ(find_repeat_in_sequence(file_values, len,result), 'g');
 
@@ -38,8 +38,8 @@ TEST(LIB_TEST, test_lib_2)
 
 TEST(LIB_TEST, test_lib_3) 
 {
-    int len = defin_fsize("file_number_2.txt");
-    char *file_values = charsequence_from_file(len, "file_number_2.txt");
+    int len = defin_fsize("../tests/data_test/file_number_2.txt");
+    char *file_values = charsequence_from_file(len, "../tests/data_test/file_number_2.txt");
     char result = 0;
         EXPECT_EQ(find_repeat_in_sequence(file_values, len,result), 'a');
         
