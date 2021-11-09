@@ -54,13 +54,13 @@ char *charsequence_from_file(int size, const char filename[])
             size_t j = 0;
             while (j < strlen(buf) && buf[j] != '\n') 
 		
-            {
-		     if (j<size)
-			{
+            {		
                 		charsequence[i] = buf[j];
                 		i++;
                 		j++;
-			}
+                        if (j == size) {
+                            break;
+                        }
             }
         }
         free(buf);
