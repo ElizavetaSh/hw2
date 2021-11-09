@@ -56,8 +56,8 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 
-add_executable(test_input_1 tests/test_input.cpp)
-target_link_libraries(test_input_1 input_lib ${GTEST_LIBRARIES} pthread)
+add_executable(test_input tests/test_input.cpp)
+target_link_libraries(test_input input_lib ${GTEST_LIBRARIES} pthread)
 
 
 add_executable(test_stat_seqn tests/test_stat_dim_lib.cpp)
@@ -68,8 +68,8 @@ add_executable(test_dim_seqn tests/test_stat_dim_lib.cpp)
 target_link_libraries(test_dim_seqn input_lib paral_sequence_lib ${GTEST_LIBRARIES} pthread)
 
 enable_testing()
-add_test(test_input_1 test_input)
-add_test(test_dim_seqn_1 test_dim_seqn)
-add_test(test_stat_seqn_1 test_stat_seqn)
+add_test(test_input test_input)
+add_test(test_dim_seqn test_dim_seqn)
+add_test(test_stat_seqn test_stat_seqn)
 
 
