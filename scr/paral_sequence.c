@@ -196,12 +196,17 @@ char find_repeat_in_sequence(char char_array[], int len, char result)
             }
 
         
-        end_index = (i+1)*thread_len + add_len;
-        part_data_thread[i].len = end_index;
+        part_data_thread[i].len = thread_len + add_len;
 
-        for (long j = start_index; j < end_index ; ++j) {
-            if (j < len)
-            part_data_thread[i].arr[j] = char_array[j];
+        for (long j = 0; j < thread_len + add_len ; ++j) {
+            if (start_index < len)
+            {
+            part_data_thread[i].arr[j] = char_array[start_index];
+            start_index++;
+            }
+            else {
+                break;
+            }
          }
 
         if (pthread_create(&(threads[i]), NULL, sequencew ,&part_data_thread[i]) != 0) {
