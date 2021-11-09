@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define ER_FILE 1111
-#define ER_MEMORY 1112
-#define ER_KERNEL 1113
+#define ER_FILE 87
+#define ER_MEMORY 88
+#define ER_KERNEL 89
 
 
 typedef struct char_count
