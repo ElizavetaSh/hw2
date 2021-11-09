@@ -166,6 +166,7 @@ char find_repeat_in_sequence(char char_array[], int len, char result)
         if (part_data_thread == NULL) 
         {
             free(part_data_thread);
+            free(threads);
             fprintf(stderr, "error with memmory\n");
             return ER_MEMORY;
         }
@@ -186,9 +187,7 @@ char find_repeat_in_sequence(char char_array[], int len, char result)
         part_data_thread[i].arr = (char*)calloc((thread_len + add_len), sizeof(char));
             if (part_data_thread[i].arr == NULL) 
             {
-                for (long j = 0; j < i; ++j){
-                    free(part_data_thread[i].arr);
-                }   
+            free(part_data_thread[i].arr);
             free(part_data_thread);
             free(threads);
             fprintf(stderr, "error with memmory\n");
@@ -232,6 +231,11 @@ char find_repeat_in_sequence(char char_array[], int len, char result)
     char_count* thread_stuck_buf = (char_count*)malloc(count_thread * sizeof(char_count));
         if (thread_stuck_buf == NULL)
         {
+            for (long j = 0; j < count_thread; ++j) {
+                free(part_data_thread[j].arr);
+            }
+            free(part_data_thread);
+            free(threads);
             free(thread_stuck_buf);
             return result;
         }
@@ -249,6 +253,11 @@ char find_repeat_in_sequence(char char_array[], int len, char result)
         }
 
     }
+    for (long j = 0; j < count_thread; ++j) {
+                free(part_data_thread[j].arr);
+            }
+            free(part_data_thread);
+            free(threads);
     free(thread_stuck_buf);
     return result;
     
