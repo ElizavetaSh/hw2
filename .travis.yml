@@ -36,7 +36,6 @@ jobs:
       - ctest --output-on-failure
   - stage: StressTest
     script:
-      - python3 create_test_data.py
       - cmake -B build -Dparallel=0
       - make -C build
       - cd build
