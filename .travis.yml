@@ -1,0 +1,75 @@
+os: linux
+dist: focal
+
+addons:
+  apt:
+    packages: lcov
+    
+language: cpp
+
+before_install:
+- sudo apt-get update
+- sudo apt-get install cppcheck
+- sudo apt-get install --yes libgtest-dev
+- sudo apt-get install --yes gcovr
+- sudo apt-get install valgrind
+- sudo apt-get install python3-pip
+- sudo pip install numpy
+
+
+jobs:
+  include:
+  - stage: SANITIZERS
+    script:
+      - cmake -B build -DADDRESS_SANITIZER=1
+      - make -C build
+      - cd build
+      - ctest --output-on-failure
+      - cmake -DUNDEFINED_SANITIZER=1 ..
+      - make 
+      - ctest --output-on-failure
+      - cmake -DTHREAD_SANITIZER=1 ..
+      - make
+      - ctest --output-on-failure
+      - cmake -DLEAK_SANITIZER=1 ..
+      - make
+      - ctest --output-on-failure
+  - stage: StressTest
+    script:
+      - cmake -B build -Dparallel=0
+      - make -C build
+      - cd build
+      - ./hw2 <../test_file.txt
+      - cmake -Dparallel=1 ..
+      - make
+      - ./hw2 <../test_file.txt
+  - stage: Testing
+    name: Cppcheck
+    script: 
+      - cppcheck src
+      - cppcheck tests
+  - stage: TestCoverage
+    script:
+      - cmake -B build -DCMAKE_BUILD_TYPE=Debug -DWITH_COVERAGE=1
+      - make -C build all test
+  - stage: Valgrind
+    script:
+      - cmake -B build -Dparallel=0
+      - make -C build
+      - cd build
+      - valgrind --leak-check=full ./hw2 <../test_file.txt
+      - cmake -Dparallel=1 ..
+      - make
+      - valgrind --leak-check=full ./hw2 <../test_file.txt
+  - stage: Gtest
+    script:
+     - cmake -B build 
+     - make -C build all test
+
+after_success:
+# Create lcov report
+- lcov --capture --directory . --output-file coverage.info
+- lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
+- lcov --list coverage.info # debug info
+# Uploading report to CodeCov
+- bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
